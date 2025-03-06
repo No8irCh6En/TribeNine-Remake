@@ -1,9 +1,8 @@
 import cv2
-import os
 import numpy as np
 import pyautogui
 
-def match_template(screen, template_path, threshold=0.8):
+def match_template(template_path, threshold=0.8):
     """
     使用模板匹配检测目标图片是否出现在屏幕上。
     :param screen: 屏幕截图（numpy数组）。
@@ -11,6 +10,8 @@ def match_template(screen, template_path, threshold=0.8):
     :param threshold: 匹配阈值，默认为0.8。
     :return: 是否匹配成功（bool）以及匹配位置（x, y, w, h）。
     """
+    screen = np.array(pyautogui.screenshot())
+    screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
     template = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
     screen_gray = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
     result = cv2.matchTemplate(screen_gray, template, cv2.TM_CCOEFF_NORMED)
@@ -31,11 +32,9 @@ def matchAndClick(template_path, threshold=0.8, click_offset=(0, 0)):
     :return: 是否匹配成功并点击。
     """
     # 捕获屏幕
-    screen = np.array(pyautogui.screenshot())
-    screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
 
     # 检测目标图片
-    is_match, match_info = match_template(screen, template_path, threshold)
+    is_match, match_info = match_template(template_path, threshold)
 
     if is_match:
         x, y, w, h = match_info
@@ -56,12 +55,8 @@ def matchAndFlip(template_path, threshold=0.8, flip_distance=200):
     :param flip_distance: 下滑的距离（像素）。
     :return: 是否匹配成功并执行了下滑操作。
     """
-    # 捕获屏幕
-    screen = np.array(pyautogui.screenshot())
-    screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
 
-    # 检测目标图片
-    is_match, match_info = match_template(screen, template_path, threshold)
+    is_match, match_info = match_template(template_path, threshold)
 
     if is_match:
         # 先移动到特定点，再执行下滑操作

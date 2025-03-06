@@ -1,12 +1,9 @@
-import pyautogui
-from capture import capture_screen
-from match import match_template
-from basic_module import click
+from basic_module import click, ensure
+import time
 
 def is_start_menu():
-    screen = capture_screen()
     menu_dir = "images/start/start-menu.png"
-    return match_template(screen, menu_dir)
+    ensure(menu_dir, "start-menu")
 
 def click_start_setup():
     start_setup_dir = "images/start/start-setup.png"
@@ -23,6 +20,8 @@ def click_delete_accout():
     delete_ok_dir = "images/start/delete-ok.png"
     click(delete_ok_dir, "delete-ok")
     
+    time.sleep(2)
+    
     close_setup_dir = "images/start/close-setup.png"
     click(close_setup_dir, "setup-closed")
 
@@ -32,9 +31,9 @@ def click_start_game():
     start_menu_dir = "images/start/start-menu.png"
     click(start_menu_dir, "start-menu")
     
-    real_start_dir = "images/start/real-start.png"
-    click(real_start_dir, "real-start")
-    
     skip_ensure_dir = "images/start/skip-ensure.png"
     click(skip_ensure_dir, "skip-ensure")
+    
+    real_start_dir = "images/start/real-start.png"
+    click(real_start_dir, "real-start")
     
