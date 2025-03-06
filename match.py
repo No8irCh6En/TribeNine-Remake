@@ -44,10 +44,8 @@ def matchAndClick(template_path, threshold=0.8, click_offset=(0, 0)):
 
         # 模拟鼠标点击
         pyautogui.click(click_x, click_y)
-        print(f"点击位置：({click_x}, {click_y})")
         return True
     else:
-        print("未匹配到目标图片")
         return False
     
 def matchAndFlip(template_path, threshold=0.8, flip_distance=200):
@@ -66,13 +64,10 @@ def matchAndFlip(template_path, threshold=0.8, flip_distance=200):
     is_match, match_info = match_template(screen, template_path, threshold)
 
     if is_match:
-        print(f"检测到目标图片：{template_path}")
         # 先移动到特定点，再执行下滑操作
         pyautogui.moveTo(match_info[0],match_info[1])
         pyautogui.scroll(-flip_distance)  # 向下滑动
-        print(f"已执行下滑操作，距离：{flip_distance} 像素")
         return True
     else:
-        print("未匹配到目标图片")
         return False
 
