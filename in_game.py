@@ -64,9 +64,11 @@ def to_gacha():
 
 def gacha10times():
     
+    global HIGH_RANK_CHARACTER, GACHA_TIMES
+    
     gacha_dir = "images/in-game/10-times.png"
     click(gacha_dir, "10-times")
-    pyautogui.click()
+    # pyautogui.click()
     
     gacha_ensure_dir = "images/in-game/gacha-ensure.png"
     click(gacha_ensure_dir, "gacha-ensure")
@@ -75,9 +77,16 @@ def gacha10times():
     click(skip_gacha_dir, "skip-gacha")
     
     new_char_dir = "images/in-game/new-char.png"
-    while(match_template(new_char_dir)):
+    new_tension_dir = "images/in-game/new-tens.png"
+    while(match_template(new_char_dir)[0] or match_template(new_tension_dir)[0]):
         pyautogui.click()
+        print("click one time")
+        time.sleep(0.5)
         
+    
+    close_gacha_dir = "images/in-game/close-gacha.png"
+    click(close_gacha_dir, "close-gacha")
+    # pyautogui.click()
     
     star_dir = "images/targets/3-star.png"
     result = match_template(star_dir)
@@ -88,6 +97,11 @@ def gacha10times():
 def gacha():
     for _ in range(GACHA_TIMES):
         gacha10times()
+        
+    ## TODO: back to init page (now in gacha page)
+    
+    
+    ## END TODO
 
 def back_to_start():
     time.sleep(10)

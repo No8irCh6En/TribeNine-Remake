@@ -25,6 +25,7 @@ def basicEnsureModules(img_dir, msg):
 START_INTERVAL = 3
 
 def click(dir, msg,intv = START_INTERVAL):
+    time.sleep(0.5)
     basicClickModules(dir, msg)
     time.sleep(intv)
 
